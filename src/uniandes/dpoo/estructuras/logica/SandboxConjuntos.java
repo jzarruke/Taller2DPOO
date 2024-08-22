@@ -1,5 +1,6 @@
 package uniandes.dpoo.estructuras.logica;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.NavigableSet;
@@ -28,8 +29,7 @@ public class SandboxConjuntos
     /**
      * Crea una nueva instancia de la clase con las dos listas inicializadas pero vacías
      */
-    public SandboxConjuntos( )
-    {
+    public SandboxConjuntos( ) {
         arbolCadenas = new TreeSet<String>( );
     }
 
@@ -37,8 +37,13 @@ public class SandboxConjuntos
      * Retorna una lista con las cadenas del conjunto ordenadas lexicográficamente
      * @return Una lista con las cadenas ordenadas
      */
-    public List<String> getCadenasComoLista( )
-    {
+    public List<String> getCadenasComoLista( ) {
+    	List<String> listaCadenas = new ArrayList<String>();
+    	for(arbolCadenas.iterator(); arbolCadenas.iterator().hasNext();) {
+    		String i = arbolCadenas.iterator().next();
+    		System.out.println(i);
+    	}
+    	//listaCadenas.sort();
         return null;
     }
 
