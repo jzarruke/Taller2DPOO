@@ -421,12 +421,12 @@ public class SandboxArreglos {
      * @param maximo El valor máximo para los números generados
      */
     public void generarEnteros( int cantidad, int minimo, int maximo ) {
-    	int range = maximo - minimo;
+    	int range = maximo - minimo + 1;
     	arregloEnteros = new int[cantidad];
     	for (int i = 0; i < cantidad; i++) {
     		double random = Math.random();
     		double num = (random * range) + minimo;
-    		arregloEnteros[i] = (int) Math.round(num);
+    		arregloEnteros[i] = (int) num;
     	}
     }
 

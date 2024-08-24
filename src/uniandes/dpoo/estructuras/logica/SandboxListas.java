@@ -285,11 +285,11 @@ public class SandboxListas {
      */
     public void generarEnteros( int cantidad, int minimo, int maximo ) {
     	listaEnteros = new ArrayList<Integer>();
-    	int range = maximo - minimo;
+    	int range = maximo - minimo - 1;
     	for (int i = 0; i < cantidad; i++) {
     		double random = Math.random();
     		double num = (random * range) + minimo;
-    		agregarEntero((int) Math.round(num));
+    		agregarEntero((int) num);
     	}
     }
 
