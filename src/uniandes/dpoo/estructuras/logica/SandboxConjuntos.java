@@ -39,21 +39,22 @@ public class SandboxConjuntos
      */
     public List<String> getCadenasComoLista( ) {
     	List<String> listaCadenas = new ArrayList<String>();
-    	for(arbolCadenas.iterator(); arbolCadenas.iterator().hasNext();) {
-    		String i = arbolCadenas.iterator().next();
-    		System.out.println(i);
+    	for(String i: arbolCadenas) {
+    		listaCadenas.add(i);
     	}
-    	//listaCadenas.sort();
-        return null;
+        return listaCadenas;
     }
 
     /**
      * Retorna una lista con las cadenas del conjunto, ordenadas lexicográficamente de mayor a menor.
      * @return Una lista con las cadenas ordenadas de mayor a menor
      */
-    public List<String> getCadenasComoListaInvertida( )
-    {
-        return null;
+    public List<String> getCadenasComoListaInvertida( ) {
+    	List<String> listaCadenas = new ArrayList<String>();
+    	for(String i : arbolCadenas.descendingSet()) {
+    		listaCadenas.add(i);
+    	}
+        return listaCadenas;
     }
 
     /**
@@ -62,9 +63,12 @@ public class SandboxConjuntos
      * Si el conjunto está vacío, debe retornar null.
      * @return La primera cadena del conjunto, o null si está vacío.
      */
-    public String getPrimera( )
-    {
-        return null;
+    public String getPrimera( ) {
+    	String first = null;
+    	if (getCantidadCadenas() > 0) {
+    		first = getCadenasComoLista().get(0);
+    	}
+        return first;
     }
 
     /**
@@ -73,9 +77,12 @@ public class SandboxConjuntos
      * Si el conjunto está vacío, debe retornar null.
      * @return La última cadena del conjunto, o null si está vacío.
      */
-    public String getUltima( )
-    {
-        return null;
+    public String getUltima( ) {
+    	String last = null;
+    	if (getCantidadCadenas() > 0) {
+    		last = getCadenasComoListaInvertida().get(0);
+    	}
+        return last;
     }
 
     /**
@@ -83,18 +90,28 @@ public class SandboxConjuntos
      * @param cadena
      * @return Una colección de cadenas mayores a la cadena dada. Si la cadena hace parte del conjunto, debe hacer parte de la colección retornada.
      */
-    public Collection<String> getSiguientes( String cadena )
-    {
-        return null;
+    public Collection<String> getSiguientes( String cadena ) {
+    	List<String> listaCadenas = getCadenasComoLista();
+    	Collection<String> nexts = new ArrayList<String>();
+    	if (arbolCadenas.contains(cadena)) {
+    		nexts.add(cadena);
+    	}
+    	if (arbolCadenas.higher(cadena) != null) {
+	    	for (int i = listaCadenas.indexOf(arbolCadenas.higher(cadena)); i < listaCadenas.size(); i++) {
+	    		if (i >= 0) {
+	    			nexts.add(listaCadenas.get(i));
+	    		}
+	    	}
+    	}
+        return nexts;
     }
 
     /**
      * Retorna la cantidad de valores en el conjunto de cadenas
      * @return
      */
-    public int getCantidadCadenas( )
-    {
-        return -1;
+    public int getCantidadCadenas( ) {
+        return arbolCadenas.size();
     }
 
     /**
@@ -104,35 +121,32 @@ public class SandboxConjuntos
      * 
      * @param cadena La cadena que se va a agregar.
      */
-    public void agregarCadena( String cadena )
-    {
-
+    public void agregarCadena( String cadena ) {
+    	arbolCadenas.add(cadena);
     }
 
     /**
      * Elimina una cadena del conjunto de cadenas
      * @param cadena La cadena que se va eliminar
      */
-    public void eliminarCadena( String cadena )
-    {
-
+    public void eliminarCadena( String cadena ) {
+    	arbolCadenas.remove(cadena);
     }
 
     /**
      * Elimina una cadena del conjunto de cadenas, independientemente de las mayúsculas o minúsculas
      * @param cadena La cadena que se va eliminar, sin tener en cuenta las mayúsculas o minúsculas
      */
-    public void eliminarCadenaSinMayusculasOMinusculas( String cadena )
-    {
-
+    public void eliminarCadenaSinMayusculasOMinusculas( String cadena ) {
+    	arbolCadenas.remove(cadena.toLowerCase());
+    	arbolCadenas.remove(cadena.toUpperCase());
     }
 
     /**
      * Elimina la primera cadena del conjunto
      */
-    public void eliminarPrimera( )
-    {
-
+    public void eliminarPrimera( ) {
+    	arbolCadenas.remove(getPrimera());
     }
 
     /**
@@ -141,9 +155,11 @@ public class SandboxConjuntos
      * Use el método toString para convertir los objetos a cadenas.
      * @param valores Una lista de objetos
      */
-    public void reiniciarConjuntoCadenas( List<Object> objetos )
-    {
-
+    public void reiniciarConjuntoCadenas( List<Object> objetos ) {
+    	arbolCadenas = new TreeSet<String>( );
+    	for (int i = 0; i < objetos.size(); i++) {
+    		agregarCadena(objetos.get(i).toString());
+    	}
     }
 
     /**
@@ -151,16 +167,23 @@ public class SandboxConjuntos
      * 
      * Note que esta operación podría modificar el órden de los elementos dentro del conjunto.
      */
-    public void volverMayusculas( )
-    {
+    public void volverMayusculas( ) {
+    	List<String> listaCadenas = getCadenasComoLista();
+    	arbolCadenas = new TreeSet<String>( );
+    	for (int i = 0; i < listaCadenas.size(); i++) {
+    		agregarCadena(listaCadenas.get(i).toUpperCase());
+    	}
     }
 
     /**
      * Construye un árbol de cadenas donde todas las cadenas están organizadas de MAYOR a MENOR.
      */
-    public TreeSet<String> invertirCadenas( )
-    {
-        return null;
+    public TreeSet<String> invertirCadenas( ) {
+    	TreeSet<String> otroArbolCadenas = new TreeSet<String>();
+    	for(String i : arbolCadenas.descendingSet()) {
+    		otroArbolCadenas.add(i);
+    	}
+        return otroArbolCadenas;
     }
 
     /**
@@ -168,9 +191,14 @@ public class SandboxConjuntos
      * @param otroArreglo El arreglo de enteros con el que se debe comparar
      * @return True si todos los elementos del arreglo están dentro del conjunto
      */
-    public boolean compararElementos( String[] otroArreglo )
-    {
-        return false;
+    public boolean compararElementos( String[] otroArreglo ) {
+    	boolean presente = true;
+    	for (int i = 0; i < otroArreglo.length; i++) {
+    		if (!arbolCadenas.contains(otroArreglo[i])) {
+    			presente = false;
+    		}
+    	}
+        return presente;
     }
 
 }
